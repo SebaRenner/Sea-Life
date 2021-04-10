@@ -20,7 +20,7 @@ def tukey_anscombe(y, residuals):
     plt.title("Tukey-Anscombe")
     plt.ylabel("Resiudals")
     plt.xlabel("Classes")
-    plt.xticks(range(n_classes))
+    plt.xticks(range(n_classes), rotation=45)
     plt.hlines(0, 0, n_classes-1, colors='r')
     
 def plot_feature_importance_gini(model, df, max_display=999):
@@ -46,6 +46,7 @@ def plot_feature_importance_gini(model, df, max_display=999):
 def one_hot(df, feature):
     enc = OneHotEncoder(handle_unknown='ignore')
     enc_df = pd.DataFrame(enc.fit_transform(df[[feature]]).toarray())
+    enc_df.columns = enc.get_feature_names([feature])
     df = df.join(enc_df)
     df.drop(feature, inplace=True, axis=1)
     return df
